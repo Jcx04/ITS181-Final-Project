@@ -71,13 +71,13 @@ public class MainFrame extends javax.swing.JFrame {
                 "Thriller",
                 "src/resources/songs/song6.mp3",
                 "src/resources/lyrics/song6.txt",
-                "src/resources/images/song.png"
+                "src/resources/images/song6.png"
             ),
             new Song(
                 "Can't Help Falling in Love",
                 "src/resources/songs/song7.mp3",
                 "src/resources/lyrics/song7.txt",
-                "src/resources/images/song.png"
+                "src/resources/images/song7.png"
             ),
         };
         
