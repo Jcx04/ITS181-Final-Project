@@ -68,16 +68,16 @@ public class MainFrame extends javax.swing.JFrame {
                 "src/resources/images/song5.png"
             ),
             new Song(
-                "Song 6",
+                "Thriller",
                 "src/resources/songs/song6.mp3",
                 "src/resources/lyrics/song6.txt",
-                "src/resources/images/nosong.png"
+                "src/resources/images/song.png"
             ),
             new Song(
-                "Song 7",
+                "Can't Help Falling in Love",
                 "src/resources/songs/song7.mp3",
                 "src/resources/lyrics/song7.txt",
-                "src/resources/images/nosong.png"
+                "src/resources/images/song.png"
             ),
         };
         
