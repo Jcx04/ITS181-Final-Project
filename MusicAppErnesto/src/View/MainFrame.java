@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,6 +32,10 @@ public class MainFrame extends javax.swing.JFrame {
             new Color(21, 17, 23)
         );
         
+        btnPlay.setEnabled(false);
+        btnPause.setEnabled(false);
+        btnStop.setEnabled(false);
+        
         songs = new Song[] {
             new Song(
                 "We Are The Champions",
@@ -39,25 +44,25 @@ public class MainFrame extends javax.swing.JFrame {
                 "src/resources/images/song1.png"
             ),
             new Song(
-                "Song 2",
+                "Eye of the Tiger",
                 "src/resources/songs/song2.mp3",
                 "src/resources/lyrics/song2.txt",
                 "src/resources/images/song2.png"
             ),
             new Song(
-                "Song 3",
+                "The Final Countdown",
                 "src/resources/songs/song3.mp3",
                 "src/resources/lyrics/song3.txt",
                 "src/resources/images/song3.png"
             ),
             new Song(
-                "Song 4",
+                "Livin' on a Prayer",
                 "src/resources/songs/song4.mp3",
                 "src/resources/lyrics/song4.txt",
                 "src/resources/images/song4.png"
             ),
             new Song(
-                "Song 5",
+                "Kung Fu Fighting",
                 "src/resources/songs/song5.mp3",
                 "src/resources/lyrics/song5.txt",
                 "src/resources/images/song5.png"
@@ -66,13 +71,13 @@ public class MainFrame extends javax.swing.JFrame {
                 "Song 6",
                 "src/resources/songs/song6.mp3",
                 "src/resources/lyrics/song6.txt",
-                "src/resources/images/song6.png"
+                "src/resources/images/nosong.png"
             ),
             new Song(
                 "Song 7",
                 "src/resources/songs/song7.mp3",
                 "src/resources/lyrics/song7.txt",
-                "src/resources/images/song7.png"
+                "src/resources/images/nosong.png"
             ),
         };
         
@@ -99,11 +104,12 @@ public class MainFrame extends javax.swing.JFrame {
         btnPause = new javax.swing.JButton();
         btnPlay = new javax.swing.JButton();
         btnStop = new javax.swing.JButton();
+        lblNowPlaying = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Music Player");
 
-        listSongs.setBackground(new java.awt.Color(29, 19, 24));
+        listSongs.setBackground(new java.awt.Color(45, 30, 38));
         listSongs.setBorder(null);
         listSongs.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         listSongs.setForeground(new java.awt.Color(255, 255, 255));
@@ -119,7 +125,7 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane2.setBorder(null);
 
         txtLyrics.setEditable(false);
-        txtLyrics.setBackground(new java.awt.Color(29, 19, 24));
+        txtLyrics.setBackground(new java.awt.Color(45, 30, 38));
         txtLyrics.setColumns(20);
         txtLyrics.setForeground(new java.awt.Color(255, 255, 255));
         txtLyrics.setRows(5);
@@ -134,10 +140,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         btnPause.setBackground(new java.awt.Color(102, 102, 102));
         btnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/button_pause.png"))); // NOI18N
+        btnPause.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPauseActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnPause);
 
         btnPlay.setBackground(new java.awt.Color(153, 153, 255));
         btnPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/button_play.png"))); // NOI18N
+        btnPlay.setMaximumSize(new java.awt.Dimension(64, 64));
+        btnPlay.setMinimumSize(new java.awt.Dimension(64, 64));
         btnPlay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlayActionPerformed(evt);
@@ -154,6 +167,10 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btnStop);
 
+        lblNowPlaying.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+        lblNowPlaying.setForeground(new java.awt.Color(255, 255, 255));
+        lblNowPlaying.setText("Now Playing: None");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,20 +185,26 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(lblImage)
-                        .addGap(30, 30, 30)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(jLabel1)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNowPlaying)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblImage)
+                                .addGap(30, 30, 30)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(21, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(80, 80, 80))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(15, 15, 15)
+                .addComponent(lblNowPlaying)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblImage)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -189,7 +212,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -198,13 +221,18 @@ public class MainFrame extends javax.swing.JFrame {
     private void listSongsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listSongsValueChanged
         // TODO add your handling code here:
         Song chosenSong = listSongs.getSelectedValue();
+
         if (chosenSong != null) {
+            btnPlay.setEnabled(true);
+            btnStop.setEnabled(true);
+            
             try {
                 String lyrics =
                     Files.readString(
                         Paths.get(chosenSong.getLyricPath())
                     );
                 txtLyrics.setText(lyrics);
+                txtLyrics.setCaretPosition(0);
             } catch (Exception e) {
                 txtLyrics.setText(
                     "Could not load lyrics."
@@ -230,18 +258,31 @@ public class MainFrame extends javax.swing.JFrame {
         Song chosenSong = listSongs.getSelectedValue();
 
         if (chosenSong != null) {
-
+            btnPause.setEnabled(true);
+            lblNowPlaying.setText(
+                "Now Playing: " + chosenSong.getTitle()
+            );
             musicController.playSong(
                     chosenSong.getAudioPath()
             );
-
         }
     }//GEN-LAST:event_btnPlayActionPerformed
 
     private void btnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopActionPerformed
         // TODO add your handling code here:
         musicController.stopSong();
+        btnPause.setEnabled(false);
+        lblNowPlaying.setText("Now Playing: None");
     }//GEN-LAST:event_btnStopActionPerformed
+
+    private void btnPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPauseActionPerformed
+        // TODO add your handling code here:
+        if (!musicController.isPaused()) {
+            musicController.pauseSong();
+        } else {
+            musicController.resumeSong();
+        }
+    }//GEN-LAST:event_btnPauseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,6 +328,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblImage;
+    private javax.swing.JLabel lblNowPlaying;
     private javax.swing.JList<Song> listSongs;
     private javax.swing.JTextArea txtLyrics;
     // End of variables declaration//GEN-END:variables
