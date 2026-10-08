@@ -4,11 +4,18 @@
  */
 package Model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 /**
  *
  * @author eston
  */
+@Entity
+@Table(name = "Song")
 public class Song {
+    @Id
+    private int id;
     private String title;
     private String audioPath;
     private String lyricPath;
@@ -19,6 +26,20 @@ public class Song {
         this.audioPath = audioPath;
         this.lyricPath = lyricPath;
         this.imagePath = imagePath;
+    }
+    
+    // overloaded constructor for use with JPA
+    public Song(int id, String title, String audioPath, String lyricPath, String imagePath) {
+
+    this.id = id;
+    this.title = title;
+    this.audioPath = audioPath;
+    this.lyricPath = lyricPath;
+    this.imagePath = imagePath;
+    }
+    
+    public int getId() {
+        return id;
     }
     
     public String getTitle() {
