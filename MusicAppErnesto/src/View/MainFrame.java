@@ -4,6 +4,7 @@
  */
 package View;
 
+import Model.LyricManager;
 import Model.Song;
 import Model.SongDAO;
 import Controller.MusicController;
@@ -22,6 +23,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private Song[] songs;
     private MusicController musicController = new MusicController();
+    private LyricManager lyricManager = new LyricManager();
     /**
      * Creates new form MainFrame
      */
@@ -38,7 +40,8 @@ public class MainFrame extends javax.swing.JFrame {
         java.util.List<Song> songList = songDAO.getAllSongs();
         songs = songList.toArray(new Song[0]);
         listSongs.setListData(songs);
-        
+        lyricManager.importMissing(songs);
+
         // initally disable all playback buttons
         btnPlay.setEnabled(false);
         btnPause.setEnabled(false);
@@ -274,19 +277,8 @@ public class MainFrame extends javax.swing.JFrame {
             btnStop.setEnabled(true);
             
             // Lyric output
-            try {
-                String lyrics =
-                    Files.readString(
-                        Paths.get(chosenSong.getLyricPath())
-                    );
-                txtLyrics.setText(lyrics);
-                txtLyrics.setCaretPosition(0);
-            } catch (Exception e) {
-                txtLyrics.setText(
-                    "Could not load lyrics."
-                );
-
-            }
+            txtLyrics.setText(lyricManager.getLyrics(chosenSong.getTitle()));
+            txtLyrics.setCaretPosition(0);
 
             // Music image output
             ImageIcon icon = new ImageIcon(chosenSong.getImagePath());
